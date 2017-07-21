@@ -51,6 +51,8 @@ class MandalaPainter:
 
                 self.canvas.create_line(point_1, point_2, fill=self.line_color.get(), width=self.line_width.get(), capstyle=ROUND, smooth=1)
 
+        self.canvas.update_idletasks()
+
         self.old_motion_x = event.x
         self.old_motion_y = event.y
 
@@ -60,9 +62,25 @@ class MandalaPainter:
 
     def clear(self):
         self.canvas.delete("all")
+        self.create_grid()
+
+    def change_background(self, new_color):
+        self.canvas.configure(bg=new_color)
+        self.canvas.update()
 
     def create_grid(self):
-        pass
+        line = self.origin_x, self.origin_y, 4 * self.origin_x, self.origin_y
+
+        self.canvas.create_line(line, fill="black", width=1, capstyle=ROUND)
+
+        for i in range(1, self.divisions):
+            new_line = Radians.rotate_line(line, self.angles[i], (self.origin_x, self.origin_y))
+
+            point_1 = Radians.polar_to_cart(new_line[0], new_line[1], (self.origin_x, self.origin_y))
+            point_2 = Radians.polar_to_cart(new_line[2], new_line[3], (self.origin_x, self.origin_y))
+
+            self.canvas.create_line(point_1, point_2, fill="black", width=1,
+                                    capstyle=ROUND, smooth=1)
 
 
 """
