@@ -96,6 +96,8 @@ class MandalaSetupDialog(Toplevel):
 
         self.parent = parent
 
+        self.result = None
+
         self.bind("<Return>", self.validate)
 
         self.grab_set()

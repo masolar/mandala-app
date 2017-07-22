@@ -18,9 +18,16 @@ def get_background_color():
 
 def open_new_image():
     global painter
+
     divisions_dialog = MandalaSetupDialog(root)
 
     params = divisions_dialog.result
+
+    if not params:
+        if not painter:
+            sys.exit()
+        return
+
     if painter:
         painter.canvas.destroy()
 
@@ -60,6 +67,7 @@ root.title("Mandala Painter")
 # Set it to None at first so we can call the open_new_image function
 painter = None
 toolbar = None
+
 """
 Setups the parameters of the Mandala Painter App
 """
